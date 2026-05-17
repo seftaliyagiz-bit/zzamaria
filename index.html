@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zza Maria – Ristorante Siciliano · Via Spalato · Torino</title>
+<meta name="description" content="Zza Maria – Ristorante Siciliano e Rosticceria a Torino. Pesce fresco, cannoli fatti in casa, aperitivo siciliano €15. Chef Francesco Graffeo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-dark: #a93226;
+    --black: #000000;
+    --charcoal: #1a1a1a;
+    --white: #ffffff;
+    --offwhite: #f5f0e8;
+    --grey-text: #aaaaaa;
+    --border-r: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--white);
+    background: var(--black);
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(to right, var(--red), var(--white), var(--red));
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+
+  /* ── NAVBAR ── */
+  #navbar {
+    position: fixed;
+    top: 3px; left: 0; right: 0;
+    background: var(--black);
+    border-bottom: 2px solid var(--red);
+    z-index: 1000;
+    padding: 0 1.5rem;
+  }
+
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    gap: 1rem;
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-main { display: flex; align-items: baseline; gap: 0.25rem; }
+  .logo-zza {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--red);
+  }
+  .logo-maria {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+  .logo-sub {
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.4);
+    font-style: italic;
+    letter-spacing: 0.04em;
+    margin-top: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.88rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .lang-toggle {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--red);
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-red {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.42rem 1rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-red:hover { background: var(--red-dark); }
+
+  .btn-outline-white {
+    border: 1.5px solid var(--white);
+    color: var(--white);
+    padding: 0.4rem 1rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 400;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .btn-outline-white:hover { background: var(--white); color: var(--black); }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--red);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+    background: var(--charcoal);
+    border-top: 1px solid #333;
+  }
+  .mobile-menu.open { max-height: 520px; }
+
+  .mobile-links {
+    list-style: none;
+    padding: 0.5rem 1.5rem;
+  }
+  .mobile-links li { border-bottom: 1px solid #333; }
+  .mobile-links a {
+    display: block;
+    padding: 0.75rem 0;
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+  }
+
+  .mobile-bottom {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 1.5rem 1.3rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: url('https://images.unsplash.com/photo-1534482421-64566f976cfa?w=1600') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 1.5rem 3rem;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.68);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(192,57,43,0.18);
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 0.35rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.4rem;
+  }
+
+  .hero-title {
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .hero-title .t-zza {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--red);
+  }
+  .hero-title .t-maria {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    color: var(--white);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+  }
+
+  .hero-sub {
+    font-style: italic;
+    color: #d8d0c0;
+    font-size: 1.05rem;
+    margin-bottom: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .hero-quote {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--red);
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+  }
+
+  .hero-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+  }
+  .hero-icons span i { color: var(--red); margin-right: 0.4rem; }
+
+  .hero-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+  }
+
+  .btn-hero-red {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.75rem 1.8rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-hero-red:hover { background: var(--red-dark); }
+
+  .btn-hero-outline {
+    border: 2px solid var(--white);
+    color: var(--white);
+    padding: 0.73rem 1.8rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 400;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-hero-outline:hover { background: var(--white); color: var(--black); }
+
+  .btn-hero-link {
+    color: var(--red);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.73rem 0.5rem;
+    transition: opacity 0.2s;
+  }
+  .btn-hero-link:hover { opacity: 0.75; }
+
+  .hero-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.82rem;
+  }
+  .pulse-dot {
+    width: 9px; height: 9px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.7); }
+    50% { box-shadow: 0 0 0 7px rgba(192,57,43,0); }
+  }
+
+  /* ── PILLARS ── */
+  #pillars {
+    background: var(--charcoal);
+    padding: 4.5rem 1.5rem;
+  }
+
+  .pillars-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .pillar-card {
+    border: 1px solid var(--red);
+    border-radius: var(--border-r);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .pillar-card:hover { transform: translateY(-4px); }
+
+  .pillar-icon { font-size: 2rem; color: var(--red); margin-bottom: 0.9rem; }
+
+  .pillar-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+  .pillar-card p { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.55; }
+
+  /* ── ACTION CARDS ── */
+  #actions { padding: 0; }
+
+  .actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .action-card {
+    padding: 4rem 2.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .action-card.ac-red { background: var(--red); }
+  .action-card.ac-black { background: var(--black); }
+  .action-card.ac-white { background: var(--white); color: var(--black); }
+
+  .action-card .ac-icon { font-size: 2.5rem; margin-bottom: 0.2rem; }
+  .action-card.ac-red .ac-icon { color: var(--white); }
+  .action-card.ac-black .ac-icon { color: var(--red); }
+  .action-card.ac-white .ac-icon { color: var(--red); }
+
+  .action-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+  }
+  .action-card.ac-white h3 { color: var(--black); }
+
+  .action-card p { font-size: 0.9rem; line-height: 1.55; opacity: 0.85; max-width: 240px; }
+  .action-card.ac-white p { color: #444; }
+
+  .btn-action-white {
+    background: var(--white);
+    color: var(--red);
+    padding: 0.65rem 1.5rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    transition: opacity 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-action-white:hover { opacity: 0.88; }
+
+  .btn-action-red {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.65rem 1.5rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    transition: opacity 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-action-red:hover { opacity: 0.88; }
+
+  .btn-action-black {
+    background: var(--black);
+    color: var(--white);
+    padding: 0.65rem 1.5rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    border: 2px solid var(--white);
+    transition: opacity 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-action-black:hover { opacity: 0.8; }
+
+  /* ── MENU ── */
+  #menu {
+    background: var(--black);
+    padding: 5rem 1.5rem;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--white);
+    margin-bottom: 0.7rem;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-size: 0.92rem;
+    color: var(--grey-text);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Tab system */
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .menu-tabs::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: transparent;
+    border: 1.5px solid var(--white);
+    color: var(--white);
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.83rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn:hover { border-color: var(--red); color: var(--red); }
+  .tab-btn.active { background: var(--red); border-color: var(--red); color: var(--white); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active {
+    display: block;
+    animation: fadeTab 0.3s ease;
+  }
+  @keyframes fadeTab { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .menu-board {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--charcoal);
+    border-radius: var(--border-r);
+    overflow: hidden;
+  }
+
+  .menu-cat-header {
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: #111;
+  }
+  .menu-cat-header span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    color: var(--red);
+  }
+  .menu-cat-header i { color: var(--red); font-size: 1rem; }
+
+  .menu-items { padding: 0.3rem 0; }
+
+  .menu-item {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .menu-item:last-child { border-bottom: none; }
+
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .item-name {
+    font-size: 0.92rem;
+    color: var(--white);
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .item-dots {
+    flex: 1;
+    border-bottom: 1px dotted rgba(255,255,255,0.2);
+    margin: 0 0.5rem 3px;
+  }
+
+  .item-price {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--red);
+    white-space: nowrap;
+  }
+
+  .item-desc {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--grey-text);
+    margin-top: 0.2rem;
+    line-height: 1.4;
+  }
+
+  /* ── APERITIVO ── */
+  #aperitivo {
+    background: var(--red);
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  #aperitivo .ap-icon {
+    font-size: 2.5rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  #aperitivo h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  #aperitivo p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  .btn-ap-white {
+    background: var(--white);
+    color: var(--red);
+    padding: 0.85rem 2.2rem;
+    border-radius: var(--border-r);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+    display: inline-block;
+  }
+  .btn-ap-white:hover { opacity: 0.88; }
+
+  /* ── GALLERY ── */
+  #gallery {
+    background: var(--charcoal);
+    padding: 5rem 1.5rem;
+  }
+
+  .gallery-grid {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    border-radius: var(--border-r);
+    aspect-ratio: 4/3;
+    border: 2px solid transparent;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .gallery-item:hover { border-color: var(--red); transform: translateY(-3px); }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.07); }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--white);
+    padding: 5rem 1.5rem;
+    color: var(--black);
+  }
+
+  #about .section-label { color: var(--red); }
+  #about .section-title { color: var(--black); text-align: left; }
+
+  .about-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .about-img img {
+    width: 100%;
+    border-radius: var(--border-r);
+    border: 2px solid var(--red);
+    display: block;
+  }
+
+  .about-text .section-title { margin-bottom: 0.8rem; }
+
+  .about-lead {
+    font-style: italic;
+    color: var(--red);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .about-text p {
+    color: #444;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-stats { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+  .stat {
+    text-align: center;
+    background: var(--offwhite);
+    border: 1px solid var(--red);
+    border-radius: var(--border-r);
+    padding: 0.7rem 1rem;
+    min-width: 88px;
+  }
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--black);
+    font-weight: 700;
+    display: block;
+  }
+  .stat-lbl { font-size: 0.7rem; color: #888; display: block; margin-top: 0.15rem; }
+
+  /* ── REVIEWS ── */
+  #reviews {
+    background: var(--black);
+    padding: 5rem 1.5rem;
+  }
+
+  .reviews-grid {
+    max-width: 1100px;
+    margin: 2.5rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .review-card {
+    background: var(--charcoal);
+    border-radius: var(--border-r);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .review-stars { color: var(--red); font-size: 1rem; }
+
+  .review-text {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .review-source {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ── CONTATTI ── */
+  #contatti {
+    background: var(--charcoal);
+    padding: 5rem 1.5rem;
+    color: var(--white);
+  }
+
+  #contatti .section-title { color: var(--white); }
+
+  .contatti-inner {
+    max-width: 1100px;
+    margin: 2.5rem auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--red);
+    margin-bottom: 1.4rem;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .contact-row i { color: var(--red); width: 18px; margin-top: 2px; flex-shrink: 0; }
+  .contact-row a { color: rgba(255,255,255,0.85); text-decoration: none; }
+  .contact-row a:hover { color: var(--red); }
+
+  .orari-table { font-size: 0.9rem; color: rgba(255,255,255,0.85); }
+  .orari-row { display: flex; gap: 0.5rem; margin-bottom: 0.2rem; }
+  .orari-day { width: 90px; color: rgba(255,255,255,0.5); }
+
+  .map-wrap { margin-top: 1.4rem; border-radius: var(--border-r); overflow: hidden; }
+
+  /* Form */
+  .contact-form h3 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--red);
+    margin-bottom: 1.4rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+
+  .form-group label {
+    display: block;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.04em;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 0.65rem 0.9rem;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--red); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-group select option { background: var(--charcoal); }
+
+  .btn-submit {
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem;
+    border-radius: var(--border-r);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: var(--red-dark); }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    color: var(--red);
+    font-size: 0.95rem;
+    margin-top: 0.8rem;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    padding: 2.5rem 1.5rem;
+    color: rgba(255,255,255,0.5);
+    border-top: 1px solid #222;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Playfair Display', serif; font-style: italic; }
+  .footer-logo .f-zza { color: var(--red); font-size: 1.1rem; }
+  .footer-logo .f-maria {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    font-style: normal;
+  }
+  .footer-logo .f-sub {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    display: block;
+    margin-top: 0.15rem;
+  }
+
+  .footer-copy { text-align: center; font-size: 0.78rem; }
+
+  .footer-links { display: flex; justify-content: flex-end; gap: 1.2rem; }
+  .footer-links a {
+    color: var(--red);
+    font-size: 1.2rem;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+  .footer-links a:hover { opacity: 0.7; }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .actions-grid { grid-template-columns: 1fr; }
+    .action-card { padding: 3rem 2rem; }
+    .pillars-grid { grid-template-columns: 1fr; max-width: 480px; }
+    .reviews-grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .about-inner { grid-template-columns: 1fr; }
+    .contatti-inner { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-right .btn-red,
+    .nav-right .btn-outline-white { display: none; }
+    .hamburger { display: block; }
+    .mobile-menu { display: block; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .hero-icons { gap: 1rem; }
+    .about-stats { gap: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-main">
+        <span class="logo-zza">Zza</span>
+        <span class="logo-maria">Maria</span>
+      </div>
+      <span class="logo-sub">Ristorante Siciliano &middot; Torino</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#menu" data-it="Men&ugrave;" data-en="Menu">Men&ugrave;</a></li>
+      <li><a href="#about" data-it="Chi siamo" data-en="About">Chi siamo</a></li>
+      <li><a href="#contatti" data-it="Contatti" data-en="Contact">Contatti</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <span class="lang-toggle" id="lang-toggle">IT | EN</span>
+      <a href="https://restaurante.covermanager.com/zza-maria/" target="_blank" rel="noopener"
+         class="btn-red" data-it="Prenota" data-en="Book">Prenota</a>
+      <a href="https://zzamaria.it" target="_blank" rel="noopener"
+         class="btn-outline-white" data-it="Ordina" data-en="Order">Ordina</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul class="mobile-links">
+      <li><a href="#menu" data-it="Men&ugrave;" data-en="Menu">Men&ugrave;</a></li>
+      <li><a href="#about" data-it="Chi siamo" data-en="About">Chi siamo</a></li>
+      <li><a href="#contatti" data-it="Contatti" data-en="Contact">Contatti</a></li>
+    </ul>
+    <div class="mobile-bottom">
+      <span class="lang-toggle" id="lang-toggle-mob">IT | EN</span>
+      <a href="https://restaurante.covermanager.com/zza-maria/" target="_blank" rel="noopener"
+         class="btn-red" data-it="Prenota" data-en="Book">Prenota</a>
+      <a href="https://zzamaria.it" target="_blank" rel="noopener"
+         class="btn-outline-white" data-it="Ordina" data-en="Order">Ordina</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">4.6&starf; Google &middot; Sluurpy 98/100 &middot; Via Spalato 88/B</div>
+
+    <h1 class="hero-title">
+      <span class="t-zza">Zza</span>
+      <span class="t-maria">Maria</span>
+    </h1>
+
+    <p class="hero-sub">
+      <span data-it="La Sicilia nel piatto — pesce freschissimo, rosticceria e cannoli fatti in casa a Torino"
+            data-en="Sicily on the plate — fresh fish daily, street food and homemade cannoli in Turin">
+        La Sicilia nel piatto — pesce freschissimo, rosticceria e cannoli fatti in casa a Torino
+      </span>
+    </p>
+
+    <p class="hero-quote">
+      <span data-it="&ldquo;Amun&igrave; — prenota il tuo tavolo!&rdquo;"
+            data-en="&ldquo;Amun&igrave; — book your table!&rdquo;">
+        &ldquo;Amun&igrave; — prenota il tuo tavolo!&rdquo;
+      </span>
+    </p>
+
+    <div class="hero-icons">
+      <span><i class="fas fa-fish"></i><span data-it="Pesce fresco" data-en="Fresh fish">Pesce fresco</span></span>
+      <span><i class="fas fa-bowl-food"></i><span data-it="Rosticceria" data-en="Street food">Rosticceria</span></span>
+      <span><i class="fas fa-cake-candles"></i><span data-it="Cannoli fatti in casa" data-en="Homemade cannoli">Cannoli fatti in casa</span></span>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="https://restaurante.covermanager.com/zza-maria/" target="_blank" rel="noopener"
+         class="btn-hero-red" data-it="Prenota un tavolo" data-en="Book a table">Prenota un tavolo</a>
+      <a href="https://zzamaria.it" target="_blank" rel="noopener"
+         class="btn-hero-outline" data-it="Ordina online" data-en="Order online">Ordina online</a>
+      <a href="#menu" class="btn-hero-link" data-it="Scopri il men&ugrave;" data-en="View menu">Scopri il men&ugrave;</a>
+    </div>
+
+    <div class="hero-status">
+      <div class="pulse-dot"></div>
+      <span data-it="Aperto tutti i giorni &middot; 10:00&ndash;15:00 &amp; 18:00&ndash;22:00"
+            data-en="Open every day &middot; 10:00&ndash;15:00 &amp; 18:00&ndash;22:00">
+        Aperto tutti i giorni &middot; 10:00&ndash;15:00 &amp; 18:00&ndash;22:00
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section id="pillars">
+  <div class="pillars-grid">
+    <div class="pillar-card fade-up">
+      <div class="pillar-icon"><i class="fas fa-fish"></i></div>
+      <h3 data-it="Pesce fresco ogni giorno" data-en="Fresh fish daily">Pesce fresco ogni giorno</h3>
+      <p data-it="Selezionato ogni mattina dallo Chef Francesco — dal mercato direttamente al tuo piatto"
+         data-en="Selected every morning by Chef Francesco — from the market directly to your plate">
+        Selezionato ogni mattina dallo Chef Francesco — dal mercato direttamente al tuo piatto
+      </p>
+    </div>
+    <div class="pillar-card fade-up">
+      <div class="pillar-icon"><i class="fas fa-bowl-food"></i></div>
+      <h3 data-it="Rosticceria siciliana" data-en="Sicilian street food">Rosticceria siciliana</h3>
+      <p data-it="Panelle, cazzilli, arancini, cannoli — la vera Palermo a Torino"
+         data-en="Panelle, cazzilli, arancini, cannoli — real Palermo in Turin">
+        Panelle, cazzilli, arancini, cannoli — la vera Palermo a Torino
+      </p>
+    </div>
+    <div class="pillar-card fade-up">
+      <div class="pillar-icon"><i class="fas fa-martini-glass-citrus"></i></div>
+      <h3 data-it="Aperitivo siciliano" data-en="Sicilian aperitivo">Aperitivo siciliano</h3>
+      <p data-it="Specialità siciliane + cocktail a €15 — il miglior aperitivo di Torino"
+         data-en="Sicilian specialties + cocktail at €15 — Turin's best aperitivo">
+        Specialità siciliane + cocktail a €15 — il miglior aperitivo di Torino
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION CARDS -->
+<section id="actions">
+  <div class="actions-grid">
+    <div class="action-card ac-red fade-up">
+      <div class="ac-icon"><i class="fas fa-calendar-check"></i></div>
+      <h3 data-it="Prenota un Tavolo" data-en="Book a Table">Prenota un Tavolo</h3>
+      <p data-it="Assicurati il tuo posto da Zza Maria. Prenota online in 30 secondi."
+         data-en="Secure your spot at Zza Maria. Book online in 30 seconds.">
+        Assicurati il tuo posto da Zza Maria. Prenota online in 30 secondi.
+      </p>
+      <a href="https://restaurante.covermanager.com/zza-maria/" target="_blank" rel="noopener"
+         class="btn-action-white" data-it="PRENOTA ORA &rarr;" data-en="BOOK NOW &rarr;">PRENOTA ORA &rarr;</a>
+    </div>
+    <div class="action-card ac-black fade-up">
+      <div class="ac-icon"><i class="fas fa-bag-shopping"></i></div>
+      <h3 data-it="Ordina da Asporto" data-en="Order Takeaway">Ordina da Asporto</h3>
+      <p data-it="La Sicilia a casa tua — ordina il tuo piatto preferito."
+         data-en="Sicily at home — order your favourite dish.">
+        La Sicilia a casa tua — ordina il tuo piatto preferito.
+      </p>
+      <a href="https://zzamaria.it" target="_blank" rel="noopener"
+         class="btn-action-black" data-it="ORDINA &rarr;" data-en="ORDER &rarr;">ORDINA &rarr;</a>
+    </div>
+    <div class="action-card ac-white fade-up">
+      <div class="ac-icon"><i class="fas fa-utensils"></i></div>
+      <h3 data-it="Scopri il Men&ugrave;" data-en="View the Menu">Scopri il Men&ugrave;</h3>
+      <p data-it="Antipasti, primi, secondi e dolci — tutto il meglio della cucina siciliana."
+         data-en="Starters, first, second courses and desserts — the best of Sicilian cuisine.">
+        Antipasti, primi, secondi e dolci — tutto il meglio della cucina siciliana.
+      </p>
+      <a href="#menu" class="btn-action-red" data-it="IL MEN&Ugrave; &rarr;" data-en="THE MENU &rarr;">IL MEN&Ugrave; &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <p class="section-label" data-it="IL NOSTRO MEN&Ugrave;" data-en="OUR MENU">IL NOSTRO MEN&Ugrave;</p>
+  <h2 class="section-title" data-it="Il Nostro Men&ugrave;" data-en="Our Menu">Il Nostro Men&ugrave;</h2>
+  <p class="section-sub" data-it="La Sicilia nel piatto — Chef Francesco Graffeo"
+                          data-en="Sicily on the plate — Chef Francesco Graffeo">
+    La Sicilia nel piatto — Chef Francesco Graffeo
+  </p>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" data-tab="antipasti"
+            data-it="Antipasti" data-en="Starters">Antipasti</button>
+    <button class="tab-btn" data-tab="primi"
+            data-it="Primi" data-en="First Courses">Primi</button>
+    <button class="tab-btn" data-tab="secondi"
+            data-it="Secondi" data-en="Main Courses">Secondi</button>
+    <button class="tab-btn" data-tab="contorni"
+            data-it="Contorni &amp; Sfizi" data-en="Sides &amp; Snacks">Contorni &amp; Sfizi</button>
+    <button class="tab-btn" data-tab="dolci"
+            data-it="Dolci" data-en="Desserts">Dolci</button>
+    <button class="tab-btn" data-tab="bevande"
+            data-it="Bevande" data-en="Drinks">Bevande</button>
+  </div>
+
+  <!-- ANTIPASTI -->
+  <div class="tab-panel active" id="tab-antipasti">
+    <div class="menu-board">
+      <div class="menu-cat-header">
+        <i class="fas fa-leaf"></i>
+        <span data-it="Antipasti" data-en="Starters">Antipasti</span>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Croccante di Seppia in Agrodolce" data-en="Crispy Cuttlefish in Sweet &amp; Sour">Croccante di Seppia in Agrodolce</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;13.00</span>
+          </div>
+          <div class="item-desc" data-it="bocconcini di seppia, panatura dorata, cipolle stufate in agrodolce"
+               data-en="cuttlefish bites, golden breading, sweet &amp; sour stewed onions">
+            bocconcini di seppia, panatura dorata, cipolle stufate in agrodolce
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Polpettine di Sarde alla Siciliana" data-en="Sicilian Sardine Meatballs">Polpettine di Sarde alla Siciliana</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;10.00</span>
+          </div>
+          <div class="item-desc" data-it="sarde fresche, pinoli, uvetta, finocchietto"
+               data-en="fresh sardines, pine nuts, raisins, wild fennel">
+            sarde fresche, pinoli, uvetta, finocchietto
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Alici Marinate" data-en="Marinated Anchovies">Alici Marinate</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;15.00</span>
+          </div>
+          <div class="item-desc" data-it="marinate a crudo, aceto, cipolla rossa, EVOO"
+               data-en="raw marinated, vinegar, red onion, extra virgin olive oil">
+            marinate a crudo, aceto, cipolla rossa, EVOO
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Caponata di Mare" data-en="Seafood Caponata">Caponata di Mare</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;13.00</span>
+          </div>
+          <div class="item-desc" data-it="melanzane, pesce spada, agrodolce"
+               data-en="aubergine, swordfish, sweet &amp; sour">
+            melanzane, pesce spada, agrodolce
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Duetto di Carpacci" data-en="Carpaccio Duo">Duetto di Carpacci</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;18.00</span>
+          </div>
+          <div class="item-desc" data-it="tonno rosso e pesce spada affumicato"
+               data-en="red tuna and smoked swordfish">
+            tonno rosso e pesce spada affumicato
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Gran Degustazione di Mare" data-en="Grand Seafood Tasting">Gran Degustazione di Mare</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;35.00</span>
+          </div>
+          <div class="item-desc" data-it="percorso completo dello Chef"
+               data-en="full Chef's tasting journey">
+            percorso completo dello Chef
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Involtini di Melanzana e Tonno" data-en="Aubergine &amp; Tuna Rolls">Involtini di Melanzana e Tonno</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;12.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Bruschette dello Chef" data-en="Chef's Bruschette">Bruschette dello Chef</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;8.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Gran Rustico Siciliano" data-en="Sicilian Rustic Platter">Gran Rustico Siciliano</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;10.00</span>
+          </div>
+          <div class="item-desc" data-it="mini arancino, panelle, crocchè"
+               data-en="mini arancino, panelle, crocchè">
+            mini arancino, panelle, crocchè
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Caponata della Tradizione" data-en="Traditional Caponata">Caponata della Tradizione</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;9.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Involtini di Melanzana al Forno" data-en="Baked Aubergine Rolls">Involtini di Melanzana al Forno</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;9.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIMI -->
+  <div class="tab-panel" id="tab-primi">
+    <div class="menu-board">
+      <div class="menu-cat-header">
+        <i class="fas fa-bowl-food"></i>
+        <span data-it="Primi Piatti" data-en="First Courses">Primi Piatti</span>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Busiate con le Sarde della Tradizione" data-en="Busiate with Traditional Sardines">Busiate con le Sarde della Tradizione</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;12.00</span>
+          </div>
+          <div class="item-desc" data-it="sarde fresche, finocchietto, uvetta, pinoli, zafferano"
+               data-en="fresh sardines, wild fennel, raisins, pine nuts, saffron">
+            sarde fresche, finocchietto, uvetta, pinoli, zafferano
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Caserecce Pistacchio e Gamberi" data-en="Caserecce with Pistachio &amp; Prawns">Caserecce Pistacchio e Gamberi</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;15.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Tagliatelle Cacio, Pepe e Gambero Rosa" data-en="Tagliatelle Cacio, Pepe &amp; Pink Prawn">Tagliatelle Cacio, Pepe e Gambero Rosa</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;18.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Caserecce Spada e Melanzane" data-en="Caserecce with Swordfish &amp; Aubergine">Caserecce Spada e Melanzane</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;15.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Rigatoni alla Norma" data-en="Rigatoni alla Norma">Rigatoni alla Norma</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;12.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Frittedda di Verdure" data-en="Frittedda of Vegetables">Frittedda di Verdure</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;10.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Timballo di Anelletti" data-en="Anelletti Timballo">Timballo di Anelletti</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;12.00</span>
+          </div>
+          <div class="item-desc" data-it="anelletti al forno, ragù, piselli, melanzane fritte"
+               data-en="baked anelletti, ragù, peas, fried aubergine">
+            anelletti al forno, ragù, piselli, melanzane fritte
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Caserecce Pistacchio e Salsiccia" data-en="Caserecce with Pistachio &amp; Sausage">Caserecce Pistacchio e Salsiccia</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;13.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECONDI -->
+  <div class="tab-panel" id="tab-secondi">
+    <div class="menu-board">
+      <div class="menu-cat-header">
+        <i class="fas fa-drumstick-bite"></i>
+        <span data-it="Secondi Piatti" data-en="Main Courses">Secondi Piatti</span>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Trancio di Spada alla Griglia" data-en="Grilled Swordfish Steak">Trancio di Spada alla Griglia</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;16.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Gamberoni alla Piastra" data-en="Grilled King Prawns">Gamberoni alla Piastra</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;18.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Il Pescato del Giorno" data-en="Catch of the Day">Il Pescato del Giorno</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;5.00 <small style="color:var(--grey-text);font-size:0.75rem">/100g</small></span>
+          </div>
+          <div class="item-desc" data-it="selezionato ogni mattina" data-en="selected every morning">
+            selezionato ogni mattina
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Frittura di Calamari e Gamberi" data-en="Fried Calamari &amp; Prawns">Frittura di Calamari e Gamberi</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;18.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Cotoletta di Vitello alla Siciliana" data-en="Sicilian Veal Cutlet">Cotoletta di Vitello alla Siciliana</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;10.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Parmigiana di Melanzane" data-en="Aubergine Parmigiana">Parmigiana di Melanzane</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;12.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Polpette al Sugo della Nonna" data-en="Nonna's Meatballs in Tomato Sauce">Polpette al Sugo della Nonna</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;10.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Stinco a Lenta Cottura" data-en="Slow-cooked Pork Shank">Stinco a Lenta Cottura</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;15.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTORNI -->
+  <div class="tab-panel" id="tab-contorni">
+    <div class="menu-board">
+      <div class="menu-cat-header">
+        <i class="fas fa-seedling"></i>
+        <span data-it="Contorni &amp; Sfizi" data-en="Sides &amp; Snacks">Contorni &amp; Sfizi</span>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Verdure Grigliate" data-en="Grilled Vegetables">Verdure Grigliate</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;6.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Cime di Rapa &ldquo;Ripassate&rdquo;" data-en="Sautéed Turnip Tops">Cime di Rapa &ldquo;Ripassate&rdquo;</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;5.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Patate al Forno o Fritte" data-en="Roasted or Fried Potatoes">Patate al Forno o Fritte</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;5.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Insalata Verde" data-en="Green Salad">Insalata Verde</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;5.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOLCI -->
+  <div class="tab-panel" id="tab-dolci">
+    <div class="menu-board">
+      <div class="menu-cat-header">
+        <i class="fas fa-cake-candles"></i>
+        <span data-it="Dolci" data-en="Desserts">Dolci</span>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Cannolo Siciliano (Grande o Mignon)" data-en="Sicilian Cannolo (Large or Mini)">Cannolo Siciliano (Grande o Mignon)</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;3.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Cassatelle Calde" data-en="Warm Cassatelle">Cassatelle Calde</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;3.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Parfait di Mandorle" data-en="Almond Parfait">Parfait di Mandorle</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;6.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEVANDE -->
+  <div class="tab-panel" id="tab-bevande">
+    <div class="menu-board">
+      <div class="menu-cat-header">
+        <i class="fas fa-wine-glass"></i>
+        <span data-it="Bevande" data-en="Drinks">Bevande</span>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Acqua Naturale / Frizzante" data-en="Still / Sparkling Water">Acqua Naturale / Frizzante</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;2.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Vino Bianco della Casa" data-en="House White Wine">Vino Bianco della Casa</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;12.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Vino Rosso della Casa" data-en="House Red Wine">Vino Rosso della Casa</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;10.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Birra alla Spina Piccola" data-en="Draft Beer Small">Birra alla Spina Piccola</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;4.00</span>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-row">
+            <span class="item-name" data-it="Birra alla Spina Grande" data-en="Draft Beer Large">Birra alla Spina Grande</span>
+            <span class="item-dots"></span>
+            <span class="item-price">&euro;6.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APERITIVO -->
+<section id="aperitivo">
+  <div class="ap-icon"><i class="fas fa-martini-glass-citrus"></i></div>
+  <h2 data-it="Aperitivo Siciliano" data-en="Sicilian Aperitivo">Aperitivo Siciliano</h2>
+  <p data-it="Specialità siciliane abbondanti + 1 cocktail a soli €15. Il modo migliore per scoprire i sapori di Zza Maria."
+     data-en="Abundant Sicilian specialties + 1 cocktail for only €15. The best way to discover the flavours of Zza Maria.">
+    Specialità siciliane abbondanti + 1 cocktail a soli &euro;15. Il modo migliore per scoprire i sapori di Zza Maria.
+  </p>
+  <a href="https://restaurante.covermanager.com/zza-maria/" target="_blank" rel="noopener"
+     class="btn-ap-white" data-it="Prenota per l&rsquo;aperitivo &rarr;" data-en="Book for aperitivo &rarr;">
+    Prenota per l&rsquo;aperitivo &rarr;
+  </a>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <p class="section-label" data-it="I NOSTRI PIATTI" data-en="OUR DISHES">I NOSTRI PIATTI</p>
+  <h2 class="section-title" data-it="La Sicilia nel Piatto" data-en="Sicily on the Plate">La Sicilia nel Piatto</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1584182896049-85bbd1c57d7c?w=800" alt="Piatto 1">
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800" alt="Piatto 2">
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=800" alt="Piatto 3">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img fade-up">
+      <img src="https://images.unsplash.com/photo-1534482421-64566f976cfa?w=800" alt="Zza Maria">
+    </div>
+    <div class="about-text fade-up">
+      <p class="section-label" style="text-align:left" data-it="CHI SIAMO" data-en="ABOUT US">CHI SIAMO</p>
+      <h2 class="section-title" style="text-align:left"
+          data-it="La Sicilia pi&ugrave; vera, a Torino."
+          data-en="The most authentic Sicily, in Turin.">
+        La Sicilia pi&ugrave; vera, a Torino.
+      </h2>
+      <p class="about-lead"
+         data-it="Chef Francesco Graffeo porta in tavola la passione di Palermo."
+         data-en="Chef Francesco Graffeo brings Palermo's passion to the table.">
+        Chef Francesco Graffeo porta in tavola la passione di Palermo.
+      </p>
+      <p data-it="Zza Maria nasce dall'amore per la Sicilia e dalla passione dello Chef Francesco Graffeo. Ogni giorno selezioniamo il pesce più fresco del mercato, prepariamo la rosticceria siciliana secondo le ricette tradizionali e sforniamo cannoli riempiti al momento. Oltre al ristorante, trovi da noi il miglior aperitivo siciliano di Torino: specialità tipiche + cocktail a €15."
+         data-en="Zza Maria was born from love for Sicily and the passion of Chef Francesco Graffeo. Every day we select the freshest fish at the market, prepare Sicilian street food following traditional recipes and fill cannoli fresh to order. Beyond the restaurant, find Turin's best Sicilian aperitivo: typical specialties + cocktail at €15.">
+        Zza Maria nasce dall&rsquo;amore per la Sicilia e dalla passione dello Chef Francesco Graffeo. Ogni giorno selezioniamo il pesce pi&ugrave; fresco del mercato, prepariamo la rosticceria siciliana secondo le ricette tradizionali e sforniamo cannoli riempiti al momento. Oltre al ristorante, trovi da noi il miglior aperitivo siciliano di Torino: specialit&agrave; tipiche + cocktail a &euro;15.
+      </p>
+      <div class="about-stats">
+        <div class="stat">
+          <span class="stat-val">4.6&starf;</span>
+          <span class="stat-lbl">Google</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val">98/100</span>
+          <span class="stat-lbl">Sluurpy</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val"><i class="fas fa-chef-hat" style="color:var(--red);font-size:0.9rem"></i></span>
+          <span class="stat-lbl">Francesco</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <p class="section-label" data-it="RECENSIONI" data-en="REVIEWS">RECENSIONI</p>
+  <h2 class="section-title" data-it="Cosa dicono i nostri ospiti" data-en="What our guests say">Cosa dicono i nostri ospiti</h2>
+  <div class="reviews-grid">
+    <div class="review-card fade-up">
+      <div class="review-stars">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <p class="review-text">&ldquo;DELICIOUS food from appetizers to first to second — all spectacular!!! The cannoli: truly amazing ricotta cream!!&rdquo;</p>
+      <div class="review-source"><i class="fas fa-award"></i> TripAdvisor</div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-stars">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <p class="review-text">&ldquo;Aperitivo top! Abbondante e molto buono con specialità siciliane €15 con drink incluso. Food: 5 Service: 5 Atmosphere: 5&rdquo;</p>
+      <div class="review-source"><i class="fab fa-google"></i> Google</div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-stars">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <p class="review-text">&ldquo;Great experience. Fresh fish and real Sicilian cuisine. Congratulations to Chef Francesco!&rdquo;</p>
+      <div class="review-source"><i class="fas fa-award"></i> TripAdvisor</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATTI -->
+<section id="contatti">
+  <p class="section-label" data-it="DOVE SIAMO" data-en="FIND US">DOVE SIAMO</p>
+  <h2 class="section-title" data-it="Contatti &amp; Orari" data-en="Contact &amp; Hours">Contatti &amp; Orari</h2>
+  <div class="contatti-inner">
+    <!-- Info + Map -->
+    <div class="contact-info fade-up">
+      <h3 data-it="Informazioni" data-en="Information">Informazioni</h3>
+
+      <div class="contact-row">
+        <i class="fas fa-location-dot"></i>
+        <span>Via Spalato 88/B, 10141 Torino</span>
+      </div>
+      <div class="contact-row">
+        <i class="fas fa-phone"></i>
+        <a href="tel:+390110363517">+39 011 036 3517</a>
+      </div>
+      <div class="contact-row">
+        <i class="fab fa-instagram"></i>
+        <a href="https://instagram.com/zzamarialab" target="_blank" rel="noopener">@zzamarialab</a>
+      </div>
+      <div class="contact-row">
+        <i class="fab fa-facebook"></i>
+        <a href="https://facebook.com/ZzaMarialab" target="_blank" rel="noopener">facebook.com/ZzaMarialab</a>
+      </div>
+
+      <div class="contact-row" style="align-items:flex-start; margin-top:0.3rem">
+        <i class="fas fa-clock" style="margin-top:3px"></i>
+        <div class="orari-table">
+          <div class="orari-row">
+            <span class="orari-day" data-it="Lun–Dom" data-en="Mon–Sun">Lun–Dom</span>
+            <span>10:00–15:00 &amp; 18:00–22:00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <iframe
+          src="https://www.google.com/maps?q=Via+Spalato+88/B,+10141+Torino&output=embed"
+          width="100%" height="280"
+          style="border:0;border-radius:8px;display:block;"
+          allowfullscreen loading="lazy"
+          title="Zza Maria map">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="contact-form fade-up">
+      <h3 data-it="Prenota un tavolo" data-en="Reserve a table">Prenota un tavolo</h3>
+      <form id="reservation-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label data-it="Nome" data-en="Name">Nome</label>
+            <input type="text" id="f-nome" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label data-it="Email" data-en="Email">Email</label>
+            <input type="email" id="f-email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label data-it="Data" data-en="Date">Data</label>
+            <input type="date" id="f-data" required>
+          </div>
+          <div class="form-group">
+            <label data-it="Ora" data-en="Time">Ora</label>
+            <select id="f-ora">
+              <option>10:00</option><option>10:30</option>
+              <option>11:00</option><option>11:30</option>
+              <option>12:00</option><option>12:30</option>
+              <option>13:00</option><option>13:30</option>
+              <option>14:00</option><option>14:30</option>
+              <option>18:00</option><option>18:30</option>
+              <option>19:00</option><option>19:30</option>
+              <option>20:00</option><option>20:30</option>
+              <option>21:00</option><option>21:30</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-it="N° persone" data-en="Guests">N° persone</label>
+            <select id="f-persone">
+              <option>1</option><option>2</option><option selected>3</option>
+              <option>4</option><option>5</option><option>6</option><option>7+</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label data-it="Note" data-en="Notes">Note</label>
+            <textarea id="f-note" rows="3"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit" data-it="Prenota &rarr;" data-en="Reserve &rarr;">Prenota &rarr;</button>
+        <div class="form-success" id="form-success">
+          <span data-it="Grazie! Ti risponderemo al pi&ugrave; presto."
+                data-en="Thank you! We'll get back to you soon.">
+            Grazie! Ti risponderemo al pi&ugrave; presto.
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div>
+        <span class="f-zza">Zza </span><span class="f-maria">Maria</span>
+      </div>
+      <span class="f-sub">Ristorante Siciliano &middot; Via Spalato 88/B &middot; Torino</span>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 &middot; Zza Maria &middot; Chef Francesco Graffeo
+    </div>
+    <div class="footer-links">
+      <a href="https://instagram.com/zzamarialab" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/ZzaMarialab" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://zzamaria.it" target="_blank" rel="noopener" aria-label="Website"><i class="fas fa-globe"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const doc = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('progress-bar').style.width = (window.scrollY / doc * 100) + '%';
+  }, { passive: true });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.querySelector('i').className = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.querySelector('i').className = 'fas fa-bars';
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Language toggle
+  let lang = 'it';
+  function setLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-it]').forEach(el => {
+      el.innerHTML = el.dataset[l] || el.dataset.it;
+    });
+  }
+
+  function toggleLang() {
+    setLang(lang === 'it' ? 'en' : 'it');
+    const label = lang === 'en' ? 'EN | IT' : 'IT | EN';
+    document.getElementById('lang-toggle').textContent = label;
+    document.getElementById('lang-toggle-mob').textContent = label;
+  }
+
+  document.getElementById('lang-toggle').addEventListener('click', toggleLang);
+  document.getElementById('lang-toggle-mob').addEventListener('click', toggleLang);
+
+  // Menu tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // IntersectionObserver
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Form submit
+  document.getElementById('reservation-form').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => { document.getElementById('form-success').style.display = 'none'; }, 5000);
+  });
+</script>
+</body>
+</html>
